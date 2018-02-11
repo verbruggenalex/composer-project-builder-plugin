@@ -47,9 +47,7 @@ contains a binary and `drupal/stage_file_proxy` that will be patched. The
 project will have the source code of package `drupal/drupal` copied to the root
 directory of the build location.
 
-### Composer file
-
-<details><summary>composer.json</summary>
+<details><summary><code>composer.json</code> example file</summary>
 
 ```json
 {
@@ -97,9 +95,7 @@ directory of the build location.
 
 </details>
 
-### Directory structure after `composer install` :
-
-<details><summary>Functional Drupal 7 installation found under `build/master`</summary>
+<details><summary><code>composer install --dev</code> result under <code>build/master</code></summary>
 
 ```bash
 ├── authorize.php
@@ -222,8 +218,11 @@ directory of the build location.
 
 </details>
 
-### Directory structure after `composer install --no-dev` :
+<details><summary><code>composer install --no-dev</code> result under <code>dist/master</code></summary>
+
 
 ```bash
 
 ```
+
+</details>
