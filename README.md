@@ -47,8 +47,9 @@ contains a binary and `drupal/stage_file_proxy` that will be patched. The
 project will have the source code of package `drupal/drupal` copied to the root
 directory of the build location.
 
+### Composer file
+
 ``` json
-// composer.json (project)
 {
     "require": {
         "drush/drush": "8.*",
@@ -92,9 +93,9 @@ directory of the build location.
 }
 ```
 
-Directory structure after `composer install` :
+### Directory structure after `composer install` :
 
-Functional Drupal 7 installation found at `build/master`
+Functional Drupal 7 installation found under `build/master`
 
 ``` bash
 ├── authorize.php
@@ -215,7 +216,7 @@ Functional Drupal 7 installation found at `build/master`
         └── path-util -> ../../../../vendor/webmozart/path-util-2.3.0
 ```
 
-Directory structure after `composer install --no-dev` :
+### Directory structure after `composer install --no-dev` :
 
 ``` bash
 
