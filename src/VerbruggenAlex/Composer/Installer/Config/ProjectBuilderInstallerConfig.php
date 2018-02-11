@@ -36,6 +36,11 @@ class ProjectBuilderInstallerConfig
     /**
      * @var string
      */
+    protected $buildRoot;
+
+    /**
+     * @var string
+     */
     protected $originalVendorDir;
 
     /**
@@ -118,13 +123,13 @@ class ProjectBuilderInstallerConfig
     {
         $this->vendorDir = $this->getBuildDirectory('absolute', 'vendorDir');
 
-//        if (false !== getenv(static::ENV_PARAMETER_VENDOR_DIR)) {
-//            $this->vendorDir = getenv(static::ENV_PARAMETER_VENDOR_DIR);
-//        }
-//
-//        if ('/' != $this->vendorDir[0]) {
-//            $this->vendorDir = $baseDir . $this->vendorDir;
-//        }
+        if (false !== getenv(static::ENV_PARAMETER_VENDOR_DIR)) {
+            $this->vendorDir = getenv(static::ENV_PARAMETER_VENDOR_DIR);
+        }
+
+        if ('/' != $this->vendorDir[0]) {
+            $this->vendorDir = $baseDir . $this->vendorDir;
+        }
     }
 
     /**
@@ -256,7 +261,13 @@ class ProjectBuilderInstallerConfig
         return $this->symlinkBasePath;
     }
 
-
+    /**
+     * @return string|bool
+     */
+    public function getBuildRoot()
+    {
+        return isset($this->buildRoot) ? $this->buildRoot : false;
+    }
 
 
     /**
@@ -318,15 +329,16 @@ class ProjectBuilderInstallerConfig
     {
         $buildPrefix = '';
         $branch = trim(str_replace('* ', '', exec("git branch | grep '\*'")));
-        if (array_key_exists('drupal-installer', $extraConfigs)) {
-            foreach (array('build-dir', 'version-dir') as $type) {
-                if (array_key_exists($type, $extraConfigs['drupal-installer'])) {
-                    $buildPrefix .= (isset($GLOBALS['argv']) && in_array('--no-dev', $GLOBALS['argv']))
-                      ? $extraConfigs['drupal-installer'][$type]['--no-dev']
-                      : $extraConfigs['drupal-installer'][$type]['--dev'];
-                }
-                $buildPrefix = rtrim($buildPrefix, '/') . DIRECTORY_SEPARATOR;
-            }
+        if (isset($extraConfigs['project-builder']['build-dir'])) {
+            $buildPrefix .= (isset($GLOBALS['argv']) && in_array('--no-dev', $GLOBALS['argv']))
+              ? $extraConfigs['project-builder']['build-dir']['--no-dev']
+              : $extraConfigs['project-builder']['build-dir']['--dev'];
+        }
+
+        if (isset($extraConfigs['project-builder']['root-dir'])) {
+            $this->buildRoot = (isset($GLOBALS['argv']) && in_array('--no-dev', $GLOBALS['argv']))
+              ? $extraConfigs['project-builder']['root-dir']['--no-dev']
+              : $extraConfigs['project-builder']['root-dir']['--dev'];
         }
 
         // Replace branch variable.

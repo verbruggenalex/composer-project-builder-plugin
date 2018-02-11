@@ -114,14 +114,15 @@ class ProjectBuilderPlugin implements PluginInterface, EventSubscriberInterface
             $package = $op->getPackage();
             $type = $package->getType();
 
-            if ($type !== 'composer-plugin' && $this->composerInstallers->supports($type)) {
+            if (!in_array($type, array('composer-plugin', 'composer-installer')) && $this->composerInstallers->supports($type)) {
                 $baseDir = $this->config->getBuildDirectory('absolute', 'baseDir');
                 $from = $this->installer->getInstallPath($package);
                 $to = rtrim($baseDir . $this->composerInstallers->getInstallPath($package), '/');
-                if ($type == 'drupal-core') {
+
+                if ($package->getPrettyName() == $this->config->getBuildRoot()) {
                     $this->filesystem->copy($from, $baseDir);
                 }
-                elseif (substr($type, 0, 7) === "drupal-") {
+                else {
                     $this->filesystem->ensureSymlinkExists($from, $to);
                 }
             }
@@ -134,10 +135,12 @@ class ProjectBuilderPlugin implements PluginInterface, EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-          ScriptEvents::POST_INSTALL_CMD =>
-            array('onPostInstallOrUpdate', self::CALLBACK_PRIORITY),
-          ScriptEvents::POST_UPDATE_CMD =>
-            array('onPostInstallOrUpdate', self::CALLBACK_PRIORITY),
+          PackageEvents::POST_PACKAGE_INSTALL =>
+            array('onPostPackageInstall', self::CALLBACK_PRIORITY),
+//          ScriptEvents::POST_INSTALL_CMD =>
+//            array('onPostInstallOrUpdate', self::CALLBACK_PRIORITY),
+//          ScriptEvents::POST_UPDATE_CMD =>
+//            array('onPostInstallOrUpdate', self::CALLBACK_PRIORITY),
         );
     }
 }

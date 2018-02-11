@@ -80,10 +80,12 @@ class ProjectBuilderInstaller extends LibraryInstaller
     public function getInstallPath(PackageInterface $package)
     {
         $this->initializeVendorDir();
-
         $extra = $package->getExtra();
+        $hasBinary = !empty($package->getBinaries());
+        $hasPatches = isset($extra['patches_applied']);
+        $notComposer = !in_array($package->getType(), array('composer-plugin', 'composer-installer'));
 
-        if (!empty($package->getBinaries()) || isset($extra['patches_applied'])) {
+        if (($hasBinary || $hasPatches) && $notComposer) {
             $basePath = $this->config->getVendorDir() . DIRECTORY_SEPARATOR
               . $package->getPrettyName();
         }

@@ -56,6 +56,7 @@ class ProjectBuilderSolver
      */
     public function isProjectBuilder(PackageInterface $package)
     {
+        return !in_array($package->getType(), array('composer-plugin', 'composer-installer'));
         $prettyName = $package->getPrettyName();
 
         // Avoid putting this package into dependencies folder, because on the first installation the package won't be
