@@ -49,6 +49,8 @@ directory of the build location.
 
 ### Composer file
 
+<details><summary>composer.json</summary>
+
 ``` json
 {
     "require": {
@@ -93,9 +95,11 @@ directory of the build location.
 }
 ```
 
+</details>
+
 ### Directory structure after `composer install` :
 
-Functional Drupal 7 installation found under `build/master`
+<details><summary>Functional Drupal 7 installation found under `build/master`</summary>
 
 ``` bash
 ├── authorize.php
@@ -215,6 +219,8 @@ Functional Drupal 7 installation found under `build/master`
         ├── assert -> ../../../../vendor/webmozart/assert-1.3.0
         └── path-util -> ../../../../vendor/webmozart/path-util-2.3.0
 ```
+
+</details>
 
 ### Directory structure after `composer install --no-dev` :
 
