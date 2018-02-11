@@ -51,7 +51,7 @@ directory of the build location.
 
 <details><summary>composer.json</summary>
 
-``` json
+```json
 {
     "require": {
         "drush/drush": "8.*",
@@ -101,7 +101,7 @@ directory of the build location.
 
 <details><summary>Functional Drupal 7 installation found under `build/master`</summary>
 
-``` bash
+```bash
 ├── authorize.php
 ├── CHANGELOG.txt
 ├── COPYRIGHT.txt
@@ -224,6 +224,6 @@ directory of the build location.
 
 ### Directory structure after `composer install --no-dev` :
 
-``` bash
+```bash
 
 ```
